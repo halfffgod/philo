@@ -50,13 +50,14 @@ typedef struct s_life
 
 //utils
 int			ft_atoi(const	char *str);
-int			is_num(char **str);
+int			checking_args(char **av);
+
 //initialization
 int			init_all(t_life *life, char **argv);
 //error management
 void		errors(int i);
 //time
-long long	timestamp(void);
-long long	time_diff(long long past, long long pres);
+long long	get_time(void);
+void		other_usleep(t_life *life, int ms);
 
 #endif

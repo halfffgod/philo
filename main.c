@@ -15,7 +15,7 @@
 int	main(int ac, char **av)
 {
 	t_life	life;
-	//printf("%lld", time_diff(timestamp(), timestamp() + 1));
+	
 	if (ac != 5 && ac != 6)
 	{
 		errors(2);

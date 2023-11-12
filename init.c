@@ -49,27 +49,6 @@ int	init_philoes(t_life *life)
 	return (0);
 }
 
-int	checking_args(char **av)
-{
-	int	i;
-	int	ac;
-
-	i = 0;
-	if (!av[5])
-		ac = 5;
-	else
-		ac = 6;
-	while (i < ac)
-	{
-		if (is_num(&av[i]))
-		{
-			return (1);
-			break ;
-		}
-		i++;
-	}
-	return (0);
-}
 
 int	init_all(t_life *life, char **av)
 {
@@ -81,12 +60,16 @@ int	init_all(t_life *life, char **av)
 		life->time_die = ft_atoi(av[2]);
 		life->time_eat = ft_atoi(av[3]);
 		life->time_sleep = ft_atoi(av[4]);
-		rules->all_eaten = 0;
-		rules->died = 0;
+		life->all_eaten = 0;
+		life->died = 0;
 		if (life->nb_philo < 2 || life->nb_philo > 200)
 			errors (1);
 		if (av[5])
+		{
+			// if(av[5] == 0)
+			// 	errors(5);
 			life->nb_eat = ft_atoi(av[5]);
+		}
 		else
 			life->nb_eat = -1;
 		if(init_mutex(life))

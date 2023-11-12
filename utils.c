@@ -66,15 +66,33 @@ int	is_num(char **str)
 	return (0);
 }
 
-long long	timestamp(void)
+int	checking_args(char **av)
 {
-	struct timeval	time;
+	int	i;
+	int	ac;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	i = 0;
+	if (!av[5])
+		ac = 5;
+	else
+	{
+		ac = 6;
+		if(av[5] == 0)
+		{
+			errors(5);
+			return(0);
+		}
+	}
+	while (i < ac)
+	{
+		if (is_num(&av[i]))
+		{
+			return (1);
+			break ;
+		}
+		i++;
+	}
+	return (0);
 }
 
-long long	time_diff(long long past, long long pres)
-{
-	return (pres - past);
-}
+//here must be also a func for printing the whole stuff
