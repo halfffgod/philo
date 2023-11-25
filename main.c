@@ -22,5 +22,12 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	init_all(&life, av);
+	// for(int i = 0; i < life.nb_philo; i++)
+	// {
+	// 	printf("todo");
+	// 	printf("%d\n", life.philo[i].id);
+	// }
+	//philo_eat(life.philo);
+	living(&life);
 	return (0);
 }

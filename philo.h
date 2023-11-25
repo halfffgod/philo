@@ -57,7 +57,15 @@ int			init_all(t_life *life, char **argv);
 //error management
 void		errors(int i);
 //time
-long long	get_time(void);
-void		other_usleep(t_life *life, int ms);
+long long	timestamp(void);
+long long	time_diff(long long past, long long pres);
+void		smart_sleep(long long time, t_life *rules);
+
+//launcher
+void	action_print(t_life *rules, int id, char *string);
+
+void	philo_eat(t_philo *philo);
+
+void	living(t_life *life);
 
 #endif

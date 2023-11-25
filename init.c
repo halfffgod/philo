@@ -12,19 +12,19 @@
 
 #include "philo.h"
 
-int init_mutex(t_life *life)
+int	init_mutex(t_life *life)
 {
 	int	i;
 
-	i = 0;
-	while(i++ <= life->nb_philo)
+	i = life->nb_philo;
+	while (--i >= 0)
 	{
-		if(pthread_mutex_init(&(life->forks[i]), NULL))
+		if (pthread_mutex_init(&(life->forks[i]), NULL))
 			return (1);
 	}
-	if(pthread_mutex_init(&(life->writing), NULL))
+	if (pthread_mutex_init(&(life->writing), NULL))
 		return (1);
-	if(pthread_mutex_init(&(life->meal_check), NULL))
+	if (pthread_mutex_init(&(life->meal_check), NULL))
 		return (1);
 	return (0);
 }
@@ -33,8 +33,8 @@ int	init_philoes(t_life *life)
 {
 	int	i;
 
-	i = 0;
-	while (i++ <= life->nb_philo)
+	i = life->nb_philo;
+	while (--i >= 0)
 	{
 		life->philo[i].id = i;
 		life->philo[i].x_eaten = 0;
@@ -49,30 +49,34 @@ int	init_philoes(t_life *life)
 	return (0);
 }
 
-
 int	init_all(t_life *life, char **av)
 {
 	if (checking_args(av))
+	{
 		errors(3);
+		//printf("fvckkk");
+	}
 	else
 	{
+		//printf("fvckkk");
 		life->nb_philo = ft_atoi(av[1]);
 		life->time_die = ft_atoi(av[2]);
 		life->time_eat = ft_atoi(av[3]);
 		life->time_sleep = ft_atoi(av[4]);
 		life->all_eaten = 0;
 		life->died = 0;
-		if (life->nb_philo < 2 || life->nb_philo > 200)
+		//printf("fvckkk");
+		if (life->nb_philo == 0 || life->nb_philo > 200)
 			errors (1);
 		if (av[5])
 		{
 			// if(av[5] == 0)
-			// 	errors(5);
+		 		// 	errors(5);
 			life->nb_eat = ft_atoi(av[5]);
 		}
 		else
 			life->nb_eat = -1;
-		if(init_mutex(life))
+		if (init_mutex(life))
 			errors(4);
 		init_philoes(life);
 	}

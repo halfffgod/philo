@@ -1,32 +1,40 @@
 #include "philo.h"
-int oxormi(t_life *life);
-
-long long	get_time(void)
+long long	timestamp(void)
 {
-	struct timeval		time;
-	static int			c;
-	static long long	start;
+  struct timeval	t;
 
-	if (gettimeofday(&time, NULL) != 0)
-		return(-1);
-	if (c == 0)
-	{
-		start = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-		c++;
-	}
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000) - start);
+  gettimeofday(&t, NULL);
+  return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	other_usleep(t_life *life, int ms)
+long long	time_diff(long long past, long long pres)
 {
-	long long	time;
+  return (pres - past);
+}
 
-	time = get_time();
-	while (!oxormi(life)) //i will write oxormi() func later
-	{
-		if (get_time() - time < ms)
-			usleep(50);
-		else
-			break;
-	}
+void		smart_sleep(long long time, t_life *rules)
+{
+  long long igh;
+
+  igh = timestamp();
+  while (!(rules->died))
+  {
+    if (time_diff(igh, timestamp()) >= time)
+      break ;
+    usleep(50);
+  }
+}
+
+
+void		action_print(t_life *rules, int id, char *string)
+{
+  pthread_mutex_lock(&(rules->writing));
+  if (!(rules->died))
+  {
+    printf("%lli ", timestamp() - rules->first_timestamp);
+    printf("Philo №%i ", id + 1);
+    printf("%s\n", string);
+  }
+  pthread_mutex_unlock(&(rules->writing));
+  return ;
 }

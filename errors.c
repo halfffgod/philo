@@ -17,8 +17,6 @@ void	errors(int i)
 	if (i == 1)
 	{
 		printf("Error:	Invalid number of philosophers:");
-		printf("	the number of philosophers can't be");
-		printf(" less than 2 or more than 200\n");
 	}
 	else if (i == 2)
 		printf("Error:	Wrong amount of arguments\n");
@@ -30,6 +28,12 @@ void	errors(int i)
 	else if (i == 4)
 		printf("Error: Fatal error when intializing mutex\n");
 	else if (i == 5)
+	{
 		printf("Error: The number of times each_philosopher");
-		printf(" must eat can't be '0'\n");	
+		printf(" must eat can't be '0'\n");
+	}
+	else if (i == 6)
+	{
+		printf("Error: There was an error while creating the threads\n");
+	}
 }
