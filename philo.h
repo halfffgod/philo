@@ -48,12 +48,12 @@ typedef struct s_life
 	int				all_eaten;
 	long long		first_timestamp;
 	pthread_mutex_t	meal_check;
-	pthread_mutex_t	forks[200];
+	pthread_mutex_t	forks[201];
 	pthread_mutex_t	writing;
 	pthread_mutex_t died_mtx;
     pthread_mutex_t x_ate_mtx;
     pthread_mutex_t all_ate_mtx;
-	t_philo			philo[200];
+	t_philo			philo[201];
 }	t_life;
 
 //utils
@@ -77,5 +77,14 @@ void	philo_eat(t_philo *philo);
 int		living(t_life *life);
 
 void one_philo_case(t_life *life, t_philo *philo);
+
+
+
+
+
+
+
+
+int	is_dead(t_life *life);
 
 #endif

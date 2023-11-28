@@ -13,14 +13,17 @@
 #include "philo.h"
 
 int		main(int argc, char **argv)
-    {
-      (void)argc;
-	  
-	  t_life	life;
-      int		ret;
-      if ((ret = init_all(&life, argv)))
-        return (5);
-      if (living(&life))
-        return (6);
-      return (0);
-    }
+{
+  (void)argc;
+  t_life	life;
+
+  if(init_all(&life, argv))
+	return(0);
+  if (living(&life))
+      errors(6);
+  return (0);
+}
+
+
+//		-ggdb3  ->  lldb <name>  -> r  <args>
+//		exit with ctrl+d

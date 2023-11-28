@@ -31,6 +31,8 @@ int	init_mutex(t_life *life)
     	return (1);
   	if (pthread_mutex_init(&(life->x_ate_mtx), NULL))
     	return (1);
+	if (pthread_mutex_init(&(life->died_mtx), NULL))
+    	return (1);
   	//////////////////////////////////////////////////
 	return (0);
 }
@@ -47,7 +49,7 @@ int	init_philoes(t_life *life)
 		life->philo[i].left_fork_id = i;
 		life->philo[i].t_last_meal = 0;
 		life->philo[i].life = life;
-		life->first_timestamp = timestamp();
+		//life->first_timestamp = timestamp();
 		if (i != life->nb_philo)
 			life->philo[i].right_fork_id = i + 1;
 		else
@@ -59,28 +61,23 @@ int	init_philoes(t_life *life)
 int	init_all(t_life *life, char **av)
 {
 	if (checking_args(av))
-	{
 		errors(3);
-		//printf("fvckkk");
-	}
 	else
 	{
-		//printf("fvckkk");
 		life->nb_philo = ft_atoi(av[1]);
 		life->time_die = ft_atoi(av[2]);
 		life->time_eat = ft_atoi(av[3]);
 		life->time_sleep = ft_atoi(av[4]);
 		life->all_eaten = 0;
 		life->died = 0;
-		//printf("fvckkk");
+		//printf("walaaahhhhhh");
 		if (life->nb_philo == 0 || life->nb_philo > 200)
-			errors (1);
-		if (av[5])
 		{
-			// if(av[5] == 0)
-		 		// 	errors(5);
-			life->nb_eat = ft_atoi(av[5]) - 1;
+			errors (1);
+			return(3);
 		}
+		if (av[5])
+			life->nb_eat = ft_atoi(av[5]) - 1;
 		else
 			life->nb_eat = -1;
 		if (init_mutex(life))

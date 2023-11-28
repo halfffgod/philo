@@ -13,6 +13,14 @@ long long	time_diff(long long past, long long pres)
   return (pres - past);
 }
 
+// void get_died_status(t_life *life, int i)
+// {
+// 	pthread_mutex_lock(&(r->died_mtx));////////
+// 	life->died = i;
+// 	pthread_mutex_unlock(&(r->died_mtx));////////
+
+// }
+
 void		smart_sleep(long long time, t_life *rules)
 {
   long long igh;

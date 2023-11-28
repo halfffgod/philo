@@ -24,10 +24,8 @@ void	philo_eat(t_philo *philo)
       pthread_mutex_lock(&(life->forks[philo->right_fork_id]));
       action_print(life, philo->id, "has taken a fork");
       pthread_mutex_lock(&(life->meal_check));
-      //pthread_mutex_lock(&(life->philosophers->t_last_meal_mtx)); /////
       action_print(life, philo->id, "is eating");
       philo->t_last_meal = timestamp();
-      //pthread_mutex_unlock(&(life->philosophers->t_last_meal_mtx));/////
       pthread_mutex_unlock(&(life->meal_check));
       smart_sleep(life->time_eat, life);
       pthread_mutex_lock(&(life->x_ate_mtx));////////
@@ -37,7 +35,34 @@ void	philo_eat(t_philo *philo)
       pthread_mutex_unlock(&(life->forks[philo->right_fork_id]));
     }
 
-void	*p_thread(void *void_philosopher)
+// void	*p_thread(void *void_philosopher)
+// {
+//       int		i;
+//       t_philo	*philo;
+//       t_life	*life;
+
+//       i = 0;
+//       philo = (t_philo *)void_philosopher;
+//       life = philo->life;
+//       if (philo->id % 2)
+//         usleep(500);
+// 	  pthread_mutex_lock(&(life->died_mtx));////////
+//       while (!(life->died))
+//       {
+//         philo_eat(philo);
+// 		//printf("%d\n", life->all_eaten);
+//         if (life->all_eaten)
+//           break ;
+//         action_print(life, philo->id, "is sleeping");
+//         smart_sleep(life->time_sleep, life);
+//         action_print(life, philo->id, "is thinking");
+//         i++;
+//       }
+// 	  pthread_mutex_unlock(&(life->died_mtx));////////
+//       return (NULL);
+// }
+
+	void	*p_thread(void *void_philosopher)
 {
       int		i;
       t_philo	*philo;
@@ -58,10 +83,6 @@ void	*p_thread(void *void_philosopher)
         action_print(life, philo->id, "is thinking");
         i++;
       }
-    //   action_print(life, philo->id, "is sleeping");
-    //   smart_sleep(life->time_sleep, life);
-    //   action_print(life, philo->id, "is thinking");
-    //   i++;
       return (NULL);
 }
 
@@ -81,6 +102,43 @@ void	*p_thread(void *void_philosopher)
       pthread_mutex_destroy(&(life->all_ate_mtx));
     }
 
+	// void	death_checker(t_life *r, t_philo *p)
+    // {
+    //   int i;
+    //   while (!(r->all_eaten))
+    //   {
+    //     i = -1;
+    //     while (++i < r->nb_philo && !(r->died))
+    //     {
+    //       pthread_mutex_lock(&(r->meal_check));
+    //       if (time_diff(p[i].t_last_meal, timestamp()) > r->time_die)
+    //       {
+    //         action_print(r, i, "is died");
+    //         //pthread_mutex_lock(&(r->died_mtx));////////
+    //         r->died = 1;
+    //     	//pthread_mutex_unlock(&(r->died_mtx));/////////
+    //       }
+    //       pthread_mutex_unlock(&(r->meal_check));
+    //       usleep(100);
+    //     }
+    //     if (r->died)
+    //       break ;
+    //     i = 0;
+    //     pthread_mutex_lock(&(r->x_ate_mtx));////////
+    //     while (r->nb_eat != -1 && i < r->nb_philo && p[i].x_eaten >= r->nb_eat)
+    //       i++; 
+    //     //pthread_mutex_unlock(&(r->x_ate_mtx));////////
+    //     if (i == r->nb_philo)
+    //     { 
+    //        //pthread_mutex_lock(&(r->all_ate_mtx));//////// changeeeee  /////////////
+    //        r->all_eaten = 1;
+    //        //pthread_mutex_unlock(&(r->all_ate_mtx));//////
+    //     }
+    //    pthread_mutex_unlock(&(r->x_ate_mtx));////////
+    //   }
+    // }
+    
+	
 	void	death_checker(t_life *r, t_philo *p)
     {
       int i;
@@ -93,8 +151,12 @@ void	*p_thread(void *void_philosopher)
           pthread_mutex_lock(&(r->meal_check));
           if (time_diff(p[i].t_last_meal, timestamp()) > r->time_die)
           {
-            action_print(r, i, "is died");
+            //action_print(r, i, "is died");
             //pthread_mutex_lock(&(r->died_mtx));////////
+			//////////////////////////////////////
+			//////////   DATA    RACE/////////
+			//////////////////////////////////////
+			action_print(r, i, "is died");
             r->died = 1;
             //pthread_mutex_unlock(&(r->died_mtx));/////////
           }
@@ -117,8 +179,7 @@ void	*p_thread(void *void_philosopher)
        pthread_mutex_unlock(&(r->x_ate_mtx));////////
       }
     }
-    
-	
+
 int		living(t_life *life)
     {
       int		i;
