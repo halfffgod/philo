@@ -1,4 +1,5 @@
 #include "philo.h"
+
 long long	timestamp(void)
 {
   struct timeval	t;

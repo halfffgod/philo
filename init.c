@@ -26,6 +26,12 @@ int	init_mutex(t_life *life)
 		return (1);
 	if (pthread_mutex_init(&(life->meal_check), NULL))
 		return (1);
+	//////////////////////////////////////////////////
+  	if (pthread_mutex_init(&(life->all_ate_mtx), NULL))
+    	return (1);
+  	if (pthread_mutex_init(&(life->x_ate_mtx), NULL))
+    	return (1);
+  	//////////////////////////////////////////////////
 	return (0);
 }
 
@@ -41,6 +47,7 @@ int	init_philoes(t_life *life)
 		life->philo[i].left_fork_id = i;
 		life->philo[i].t_last_meal = 0;
 		life->philo[i].life = life;
+		life->first_timestamp = timestamp();
 		if (i != life->nb_philo)
 			life->philo[i].right_fork_id = i + 1;
 		else
@@ -72,7 +79,7 @@ int	init_all(t_life *life, char **av)
 		{
 			// if(av[5] == 0)
 		 		// 	errors(5);
-			life->nb_eat = ft_atoi(av[5]);
+			life->nb_eat = ft_atoi(av[5]) - 1;
 		}
 		else
 			life->nb_eat = -1;
@@ -82,3 +89,13 @@ int	init_all(t_life *life, char **av)
 	}
 	return (0);
 }
+
+void one_philo_case(t_life *life, t_philo *philo)
+	{
+		{
+			action_print(life, philo->id, "has taken a fork");
+			action_print(life, philo->id, "has taken a fork");
+			action_print(life, philo->id, "is died");
+		}
+		
+	}

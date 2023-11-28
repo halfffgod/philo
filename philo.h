@@ -32,6 +32,11 @@ typedef struct s_philo
 
 }	t_philo;
 
+// x_eaten_mtx
+// die mtx
+// left/right fork mtx
+// meal check mtx
+
 typedef struct s_life
 {
 	int				nb_philo;
@@ -45,6 +50,9 @@ typedef struct s_life
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	forks[200];
 	pthread_mutex_t	writing;
+	pthread_mutex_t died_mtx;
+    pthread_mutex_t x_ate_mtx;
+    pthread_mutex_t all_ate_mtx;
 	t_philo			philo[200];
 }	t_life;
 
@@ -66,6 +74,8 @@ void	action_print(t_life *rules, int id, char *string);
 
 void	philo_eat(t_philo *philo);
 
-void	living(t_life *life);
+int		living(t_life *life);
+
+void one_philo_case(t_life *life, t_philo *philo);
 
 #endif

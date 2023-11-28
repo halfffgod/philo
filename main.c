@@ -12,22 +12,15 @@
 
 #include "philo.h"
 
-int	main(int ac, char **av)
-{
-	t_life	life;
-	
-	if (ac != 5 && ac != 6)
-	{
-		errors(2);
-		return (0);
-	}
-	init_all(&life, av);
-	// for(int i = 0; i < life.nb_philo; i++)
-	// {
-	// 	printf("todo");
-	// 	printf("%d\n", life.philo[i].id);
-	// }
-	//philo_eat(life.philo);
-	living(&life);
-	return (0);
-}
+int		main(int argc, char **argv)
+    {
+      (void)argc;
+	  
+	  t_life	life;
+      int		ret;
+      if ((ret = init_all(&life, argv)))
+        return (5);
+      if (living(&life))
+        return (6);
+      return (0);
+    }

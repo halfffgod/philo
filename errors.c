@@ -15,9 +15,7 @@
 void	errors(int i)
 {
 	if (i == 1)
-	{
 		printf("Error:	Invalid number of philosophers:");
-	}
 	else if (i == 2)
 		printf("Error:	Wrong amount of arguments\n");
 	else if (i == 3)
