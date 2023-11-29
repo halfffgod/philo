@@ -57,10 +57,10 @@ int	init_philoes(t_life *life)
 
 int	init_all(t_life *life, char **av)
 {
-	if (checking_args(av))
-		errors(3);
-	else
-	{
+	// if (checking_args(av))
+	// 	errors(3);
+	// else
+	// {
 		life->nb_philo = ft_atoi(av[1]);
 		life->time_die = ft_atoi(av[2]);
 		life->time_eat = ft_atoi(av[3]);
@@ -81,7 +81,7 @@ int	init_all(t_life *life, char **av)
 		if (init_mutex(life))
 			errors(4);
 		init_philoes(life);
-	}
+	// }
 	return (0);
 }
 
@@ -89,7 +89,16 @@ void	one_philo_case(t_life *life, t_philo *philo)
 {
 	{
 		action_print(life, philo->id, "has taken a fork");
-		action_print(life, philo->id, "has taken a fork");
 		action_print(life, philo->id, "is died");
 	}
+}
+
+int	get_died_flag(t_life *r)
+{
+	int	gh;
+
+	pthread_mutex_lock(&(r->died_mtx));
+	gh = r->died;
+	pthread_mutex_unlock(&(r->died_mtx));
+	return (gh);
 }

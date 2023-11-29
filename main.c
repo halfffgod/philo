@@ -17,7 +17,9 @@ int	main(int argc, char **argv)
 	t_life	life;
 
 	(void)argc;
-	if (init_all(&life, argv))
+	if (checking_args(argv))
+		errors(3);
+	else if (init_all(&life, argv))
 		return (0);
 	if (living(&life))
 		errors(6);

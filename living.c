@@ -45,7 +45,7 @@ void	*p_thread(void *void_philosopher)
 	life = philo->life;
 	if (philo->id % 2)
 		usleep(500);
-	while (!(life->died))
+	while (!(get_died_flag(life)))
 	{
 		philo_eat(philo);
 		pthread_mutex_lock(&(life->all_ate_mtx));
@@ -85,20 +85,20 @@ void	death_checker(t_life *r, t_philo *p)
 	while (!(r->all_eaten))
 	{
 		i = -1;
-		while (++i < r->nb_philo && !(r->died))
+		while (++i < r->nb_philo && !(get_died_flag(r)))
 		{
 			pthread_mutex_lock(&(r->meal_check));
 			if (time_diff(p[i].t_last_meal, timestamp()) > r->time_die)
 			{
-				pthread_mutex_lock(&(r->died_mtx));
 				action_print(r, i, "is died");
+				pthread_mutex_lock(&(r->died_mtx));
 				r->died = 1;
 				pthread_mutex_unlock(&(r->died_mtx));
 			}
 			pthread_mutex_unlock(&(r->meal_check));
 			usleep(100);
 		}
-		if (r->died)
+		if (get_died_flag(r))
 			break ;
 		i = 0;
 		pthread_mutex_lock(&(r->x_ate_mtx));

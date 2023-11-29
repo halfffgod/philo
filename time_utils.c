@@ -30,7 +30,7 @@ void	smart_sleep(long long time, t_life *rules)
 	long long	igh;
 
 	igh = timestamp();
-	while (!(rules->died))
+	while (!(get_died_flag(rules)))
 	{
 		if (time_diff(igh, timestamp()) >= time)
 			break ;
@@ -41,7 +41,7 @@ void	smart_sleep(long long time, t_life *rules)
 void	action_print(t_life *rules, int id, char *string)
 {
 	pthread_mutex_lock(&(rules->writing));
-	if (!(rules->died))
+	if (!(get_died_flag(rules)))
 	{
 		printf("%lli ", timestamp() - rules->first_timestamp);
 		printf("Philo №%i ", id + 1);
