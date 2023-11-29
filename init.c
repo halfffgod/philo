@@ -68,8 +68,12 @@ int	init_all(t_life *life, char **av)
 		life->time_die = ft_atoi(av[2]);
 		life->time_eat = ft_atoi(av[3]);
 		life->time_sleep = ft_atoi(av[4]);
+		pthread_mutex_lock(&(life->all_ate_mtx));////////
 		life->all_eaten = 0;
+		pthread_mutex_unlock(&(life->all_ate_mtx));////////
+		pthread_mutex_lock(&(life->died_mtx));////////
 		life->died = 0;
+		pthread_mutex_unlock(&(life->died_mtx));////////
 		//printf("walaaahhhhhh");
 		if (life->nb_philo == 0 || life->nb_philo > 200)
 		{

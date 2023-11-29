@@ -100,6 +100,7 @@ void	philo_eat(t_philo *philo)
       pthread_mutex_destroy(&(life->writing));
       pthread_mutex_destroy(&(life->x_ate_mtx));
       pthread_mutex_destroy(&(life->all_ate_mtx));
+	  pthread_mutex_destroy(&(life->died_mtx));
     }
 
 	// void	death_checker(t_life *r, t_philo *p)
@@ -152,13 +153,13 @@ void	philo_eat(t_philo *philo)
           if (time_diff(p[i].t_last_meal, timestamp()) > r->time_die)
           {
             //action_print(r, i, "is died");
-            //pthread_mutex_lock(&(r->died_mtx));////////
+            pthread_mutex_lock(&(r->died_mtx));////////
 			//////////////////////////////////////
 			//////////   DATA    RACE/////////
 			//////////////////////////////////////
 			action_print(r, i, "is died");
             r->died = 1;
-            //pthread_mutex_unlock(&(r->died_mtx));/////////
+            pthread_mutex_unlock(&(r->died_mtx));/////////
           }
           pthread_mutex_unlock(&(r->meal_check));
           usleep(100);
@@ -169,6 +170,7 @@ void	philo_eat(t_philo *philo)
         pthread_mutex_lock(&(r->x_ate_mtx));////////
         while (r->nb_eat != -1 && i < r->nb_philo && p[i].x_eaten >= r->nb_eat)
           i++;  
+		// printf(" %d\n", i);
         //pthread_mutex_unlock(&(r->x_ate_mtx));////////
         if (i == r->nb_philo)
         { 
