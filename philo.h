@@ -32,11 +32,6 @@ typedef struct s_philo
 
 }	t_philo;
 
-// x_eaten_mtx
-// die mtx
-// left/right fork mtx
-// meal check mtx
-
 typedef struct s_life
 {
 	int				nb_philo;
@@ -50,41 +45,23 @@ typedef struct s_life
 	pthread_mutex_t	meal_check;
 	pthread_mutex_t	forks[201];
 	pthread_mutex_t	writing;
-	pthread_mutex_t died_mtx;
-    pthread_mutex_t x_ate_mtx;
-    pthread_mutex_t all_ate_mtx;
+	pthread_mutex_t	died_mtx;
+	pthread_mutex_t	x_ate_mtx;
+	pthread_mutex_t	all_ate_mtx;
 	t_philo			philo[201];
 }	t_life;
 
-//utils
 int			ft_atoi(const	char *str);
 int			checking_args(char **av);
-
-//initialization
 int			init_all(t_life *life, char **argv);
-//error management
 void		errors(int i);
-//time
 long long	timestamp(void);
 long long	time_diff(long long past, long long pres);
 void		smart_sleep(long long time, t_life *rules);
-
-//launcher
-void	action_print(t_life *rules, int id, char *string);
-
-void	philo_eat(t_philo *philo);
-
-int		living(t_life *life);
-
-void one_philo_case(t_life *life, t_philo *philo);
-
-
-
-
-
-
-
-
-int	is_dead(t_life *life);
+void		action_print(t_life *rules, int id, char *string);
+void		philo_eat(t_philo *philo);
+int			living(t_life *life);
+void		one_philo_case(t_life *life, t_philo *philo);
+int			is_dead(t_life *life);
 
 #endif
