@@ -57,31 +57,26 @@ int	init_philoes(t_life *life)
 
 int	init_all(t_life *life, char **av)
 {
-	// if (checking_args(av))
-	// 	errors(3);
-	// else
-	// {
-		life->nb_philo = ft_atoi(av[1]);
-		life->time_die = ft_atoi(av[2]);
-		life->time_eat = ft_atoi(av[3]);
-		life->time_sleep = ft_atoi(av[4]);
-		life->all_eaten = 0;
-		pthread_mutex_lock(&(life->died_mtx));
-		life->died = 0;
-		pthread_mutex_unlock(&(life->died_mtx));
-		if (life->nb_philo == 0 || life->nb_philo > 200)
-		{
-			errors (1);
-			return (3);
-		}
-		if (av[5])
-			life->nb_eat = ft_atoi(av[5]) - 1;
-		else
-			life->nb_eat = -1;
-		if (init_mutex(life))
-			errors(4);
-		init_philoes(life);
-	// }
+	life->nb_philo = ft_atoi(av[1]);
+	life->time_die = ft_atoi(av[2]);
+	life->time_eat = ft_atoi(av[3]);
+	life->time_sleep = ft_atoi(av[4]);
+	life->all_eaten = 0;
+	pthread_mutex_lock(&(life->died_mtx));
+	life->died = 0;
+	pthread_mutex_unlock(&(life->died_mtx));
+	if (life->nb_philo == 0 || life->nb_philo > 200)
+	{
+		errors (1);
+		return (3);
+	}
+	if (av[5])
+		life->nb_eat = ft_atoi(av[5]) - 1;
+	else
+		life->nb_eat = -1;
+	if (init_mutex(life))
+		errors(4);
+	init_philoes(life);
 	return (0);
 }
 

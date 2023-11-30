@@ -64,5 +64,6 @@ int			living(t_life *life);
 void		one_philo_case(t_life *life, t_philo *philo);
 int			is_dead(t_life *life);
 int			get_died_flag(t_life *r);
+void		death_checker(t_life *r, t_philo *p);
 
 #endif
